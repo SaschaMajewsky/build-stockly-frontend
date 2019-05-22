@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './WatchList.scss';
-import { getWatchlist } from '../../actions';
+import { getWatchlist, fetchWatchList } from '../../actions';
 import { connect } from 'react-redux';
 import WatchStocks from './WatchStocks';
-
 class WatchList extends Component {
   state = {
     showDelete: false
@@ -18,9 +17,10 @@ class WatchList extends Component {
   };
   render() {
     let watchListArray = this.props.watchList;
-
-    return !this.props.watchList.length ? null : (
-      <div className="watchlist-container">
+    console.log(this.props);
+    //!this.props.watchList.length ? null :
+    return (
+      <div className="watchlist-container" onClick={this.props.fetchWatchList}>
         <h4 className="watchlist-title">Watchlist / Portfolio</h4>
         <table>
           <thead>
@@ -53,6 +53,7 @@ class WatchList extends Component {
 
 const mapStateToProps = state => {
   //takes watch state and removes duplicate entries
+
   const uniqueArr = state.watchList.filter((stock, i, self) => {
     return (
       i ===
@@ -68,5 +69,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getWatchlist }
+  { getWatchlist, fetchWatchList }
 )(WatchList);

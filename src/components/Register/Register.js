@@ -3,6 +3,7 @@ import './Register.scss';
 import { register } from '../../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
 class Register extends Component {
   state = {
     email: '',
@@ -59,7 +60,9 @@ class Register extends Component {
               onChange={this.handleChanges}
               value={this.state.value}
             />
-            <button type="submit">Sign Up</button>
+            <button type="submit">
+              {this.props.isLoggingIn ? <BeatLoader /> : 'Sign Up'}
+            </button>
             <div className="alternative-cta">
               <p>Already have an account?</p>
               <Link to="/login">Login</Link>

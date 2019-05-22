@@ -6,7 +6,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   SAVE_TO_WATCHLIST,
-  GET_WATCHLIST
+  GET_WATCHLIST,
+  FETCHING_WATCHLIST
 } from '../actions';
 
 const initialState = {
@@ -59,6 +60,12 @@ export const rootReducer = (state = initialState, action) => {
     case GET_WATCHLIST:
       return {
         watchList: state.watchList
+      };
+
+    case FETCHING_WATCHLIST:
+      return {
+        ...state,
+        fetching: true
       };
 
     default:

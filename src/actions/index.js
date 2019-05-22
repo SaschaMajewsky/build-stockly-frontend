@@ -1,13 +1,16 @@
 /*
 _____AVAILABLE ACTIONS_____
-login()
-register()
+login([credentials])
+register([credentials])
+addToWatchList([StockData])
+getWatchlist([currentWatchList])
 
 */
 
 import axios from 'axios';
-// import { axiosWithAuth } from '../components/auth/axiosWithAuth';
+import { axiosWithAuth } from '../components/auth/axiosWithAuth';
 
+const backend = 'https://stockly-backend.herokuapp.com';
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -17,7 +20,7 @@ export const login = creds => dispatch => {
   //passes ({email, password}) payload to `/auth/login`, and server checks if they are correct, if so, res.data returns a token and User Object
   dispatch({ type: LOGIN_START });
   return axios
-    .post('https://stockly-backend.herokuapp.com/auth/login', creds)
+    .post(`${backend}/auth/login`, creds)
     .then(res => {
       console.log(res.data);
       localStorage.setItem('token', res.data.token);
@@ -35,7 +38,7 @@ export const register = creds => dispatch => {
   dispatch({ type: REGISTER_START });
   console.log(creds);
   return axios
-    .post('https://stockly-backend.herokuapp.com/auth/register', creds)
+    .post(`${backend}/auth/register`, creds)
 
     .then(res => {
       console.log(res.data);
@@ -46,14 +49,8 @@ export const register = creds => dispatch => {
     .catch(err => dispatch({ type: REGISTER_FAILURE, payload: err }));
 };
 
-// export const FETCHING_STOCKS = 'FETCH_STOCKS';
-// export const FETCH_STOCKS_SUCCESSFUL = 'FETCH_STOCKS_SUCCESSFUL';
-// export const FETCH_STOCKS_FAILURE = 'FETCH_STOCKS_FAILURE';
-
-// export const getStockData = () => dispatch => {};
-
 export const SAVE_TO_WATCHLIST = 'SAVE_TO_WATCHLIST';
-export const addToWatchList = stockData => {
+export const addToWatchList = stockData => dispatch => {
   return {
     type: SAVE_TO_WATCHLIST,
     payload: stockData
@@ -66,36 +63,16 @@ export const getWatchlist = watchList => ({
   payload: watchList
 });
 
-export const FETCHING_WATCH_LIST = 'FETCHING_WATCH_LIST';
-export const GET_WATCH_LIST_SUCCESS = 'GET_WATCH_LIST_SUCCESS';
-export const GET_WATCH_LIST_FAILURE = 'GET_WATCH_LIST_FAILURE';
-
+export const FETCHING_WATCHLIST = 'FETCHING_WATCHLIST';
+export const FETCHING_WATCHLIST_SUCCESSFUL = 'FETCHING_WATCHLIST_SUCCESSFUL';
+export const FETCHING_WATCHLIST_FAILURE = 'FETCHING_WATCHLIST_FAILURE';
+//fetch watch needs to get the curret user's watch list and add it to state
 export const fetchWatchList = payload => dispatch => {
-  dispatch({ type: FETCHING_WATCH_LIST });
-  return axios
-    .post('https://stockly-backend.herokuapp.com/favorites')
+  dispatch({ type: FETCHING_WATCHLIST });
+  axiosWithAuth()
+    .get(`${backend}/favorites`)
     .then(res => {
       console.log(res.data);
-      localStorage.setItem('token', res.data.token);
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
     })
     .catch(err => console.log(err));
 };
-
-// export const FETCH_CURRENT_STOCK = 'FETCH_CURRENT_STOCK';
-// export const FETCH_CURRENT_STOCK_SUCCESS = 'FETCH_CURRENT_STOCK_SUCCESS';
-// export const FETCH_CURRENT_STOCK_FAILURE = 'FETCH_CURRENT_STOCK_FAILURE';
-
-// export const getCurrentStock = (ticker) => dispatch => {
-//   //passes ({email, password, username}) payload to `/auth/register`, and server returns returns a ({token, user:{username,password}})
-//   dispatch({ type: FETCH_CURRENT_STOCK });
-//   return axios
-//     .get(`https://stockly-backend.herokuapp.com/stocks/${ticker}`, creds)
-
-//     .then(res => {
-//       console.log(res.data);
-
-//       dispatch({ type: FETCH_CURRENT_STOCK_SUCCESS, payload: res.data});
-//     })
-//     .catch(err => console.log(err));
-// };
