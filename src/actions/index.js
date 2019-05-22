@@ -50,11 +50,16 @@ export const register = creds => dispatch => {
 };
 
 export const SAVE_TO_WATCHLIST = 'SAVE_TO_WATCHLIST';
+export const ADD_STOCK_TO_WATCHLIST = 'ADD_STOCK_TO_WATCHLIST';
 export const addToWatchList = stockData => dispatch => {
-  return {
-    type: SAVE_TO_WATCHLIST,
-    payload: stockData
+  const ticker = {
+    ticker: stockData.symbol
   };
+  dispatch({ type: ADD_STOCK_TO_WATCHLIST });
+  axiosWithAuth()
+    .post(`${backend}/favorites`, ticker)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err));
 };
 
 export const GET_WATCHLIST = 'GET_WATCHLIST';
@@ -73,6 +78,7 @@ export const fetchWatchList = payload => dispatch => {
     .get(`${backend}/favorites`)
     .then(res => {
       console.log(res.data);
+      dispatch({ type: FETCHING_WATCHLIST_SUCCESSFUL, payload: res.data });
     })
     .catch(err => console.log(err));
 };

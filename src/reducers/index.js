@@ -7,7 +7,8 @@ import {
   REGISTER_FAILURE,
   SAVE_TO_WATCHLIST,
   GET_WATCHLIST,
-  FETCHING_WATCHLIST
+  FETCHING_WATCHLIST,
+  FETCHING_WATCHLIST_SUCCESSFUL
 } from '../actions';
 
 const initialState = {
@@ -50,6 +51,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         isRegistering: false
       };
+    //CLICK HANDLER IN StockInfo this will need to POST to /favorites
     case SAVE_TO_WATCHLIST:
       return {
         ...state,
@@ -61,12 +63,19 @@ export const rootReducer = (state = initialState, action) => {
       return {
         watchList: state.watchList
       };
-
+    //GET req for WatchList
     case FETCHING_WATCHLIST:
       return {
         ...state,
         fetching: true
       };
+    case FETCHING_WATCHLIST_SUCCESSFUL:
+      return {
+        ...state,
+        watchList: action.payload
+      };
+
+    //POST req for WatchList
 
     default:
       return state;
