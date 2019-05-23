@@ -96,10 +96,6 @@ class StockInfo extends Component {
   }
 
   addToWatchlist = e => {
-    if (this.props.fetching) {
-      return;
-    }
-
     const symbol = this.state.symbol;
     const obj = { ...this.state };
 
@@ -160,7 +156,7 @@ class StockInfo extends Component {
             </div>
             <button
               onClick={this.addToWatchlist}
-              disabled={this.state.sentiment ? false : true}
+              disabled={this.props.preventRequest === true ? true : false}
               className="StockInfo__add-watchlist"
             >
               Add to Watchlist
@@ -180,6 +176,8 @@ class StockInfo extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
+
   return {
     watchList: state.watchList
   };

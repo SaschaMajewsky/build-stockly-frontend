@@ -53,7 +53,9 @@ export const register = creds => dispatch => {
 // export const getStockData = () => dispatch => {};
 
 export const SAVE_TO_WATCHLIST = 'SAVE_TO_WATCHLIST';
+export const FETCHING_WATCHLIST_POST = 'FETCHING_WATCHLIST_POST';
 export const addToWatchList = stockData => dispatch => {
+  dispatch({ type: FETCHING_WATCHLIST_POST });
   const ticker = {
     ticker: stockData.symbol
   };

@@ -15,6 +15,7 @@ const initialState = {
   isLoggingIn: false,
   isRegistering: false,
   token: localStorage.getItem('token'),
+  preventRequest: false,
   watchList: []
 };
 
