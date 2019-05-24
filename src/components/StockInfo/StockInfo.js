@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import Sentiment from '../Sentiment';
-import './StockInfo.scss';
 import axios from 'axios';
 import { axiosWithAuth } from '../auth/axiosWithAuth';
 import { connect } from 'react-redux';
 import { addToWatchList } from '../../actions';
 import { RingLoader } from 'react-spinners';
+import './StockInfo.scss';
 import {
   formatPrice,
   formatPercentChange,
   formatPriceChange
 } from '../../helpers/formatNumbers';
-import StockChart from '../StockChart';
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 class StockInfo extends Component {
@@ -110,7 +110,7 @@ class StockInfo extends Component {
         <div className="stock-info-stock-chart">
           <div className="StockInfo">
             <div className="StockInfo__header">
-              <div style={{ position: 'relative' }}>
+              <div>
                 <h3 className="StockInfo__title">{`${this.state.name} (${
                   this.state.symbol
                 })`}</h3>
@@ -118,6 +118,19 @@ class StockInfo extends Component {
                   Real Time Price. Currency in USD.
                 </p>
               </div>
+              {this.state.sentiment && (
+                <button
+                  onClick={this.addToWatchlist}
+                  className="StockInfo__add-watchlist"
+                >
+                  Add to Watchlist
+                </button>
+              )}
+              {this.state.watchListError && (
+                <div className="Stock-info__watchlist-error">
+                  {this.state.watchListError}
+                </div>
+              )}
             </div>
             {this.state.price && (
               <div>
@@ -130,6 +143,7 @@ class StockInfo extends Component {
                     {formatPercentChange(this.state.changePercent)}
                   </h3>
                 </div>
+
                 <div>
                   <div className="StockInfo__details">
                     Previous Close{' '}
@@ -148,25 +162,10 @@ class StockInfo extends Component {
                     Volume <span>{this.state.volume}</span>
                   </div>
                 </div>
-                <div style={{ position: 'relative' }}>
-                  {this.state.sentiment && (
-                    <button
-                      onClick={this.addToWatchlist}
-                      className="StockInfo__add-watchlist"
-                    >
-                      Add to Watchlist
-                    </button>
-                  )}
-                  {this.state.watchListError && (
-                    <div className="Stock-info__watchlist-error">
-                      {this.state.watchListError}
-                    </div>
-                  )}
-                </div>
+                <div />
               </div>
             )}
           </div>
-          <StockChart symbol={this.props.symbol} />
         </div>
         {this.state.sentiment ? (
           <Sentiment

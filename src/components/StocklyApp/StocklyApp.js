@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './StocklyApp.scss';
 import SearchBar from '../SearchBar';
-import WatchList from '../WatchList';
 import { IoMdLogOut } from 'react-icons/io';
+import WatchList from '../WatchList';
 import TopSearched from '../TopSearched';
+import StockChart from '../StockChart';
+import { connect } from 'react-redux';
+import StockInfo from '../StockInfo';
 
 class StocklyApp extends Component {
   logout = () => {
@@ -31,13 +34,24 @@ class StocklyApp extends Component {
         </div>
         <div className="app-container">
           <div className="app-main">
-            <div className="app-main__stock-lists">
-              <TopSearched />
-              <WatchList />
+            <div className="app-main__top">
+              <div>
+                <SearchBar />
+                {this.props.selectedStock && this.props.selectedStock.name && (
+                  <StockInfo
+                    symbol={this.props.selectedStock.symbol}
+                    name={this.props.selectedStock.name}
+                  />
+                )}
+              </div>
+              <div className="app-main__stock-lists">
+                <TopSearched />
+                <WatchList />
+              </div>
             </div>
-            <div>
-              <SearchBar />
-            </div>
+
+            <StockChart />
+
             <div />
           </div>
         </div>
@@ -45,4 +59,14 @@ class StocklyApp extends Component {
     );
   }
 }
-export default withRouter(StocklyApp);
+
+const mapStateToProps = state => {
+  return { selectedStock: state.selectedStock };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withRouter(StocklyApp));
+
+// export default withRouter(StocklyApp);

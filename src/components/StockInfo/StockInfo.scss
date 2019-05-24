@@ -12,16 +12,17 @@
 }
 
 .StockInfo {
-  width: 350px;
-  margin-right: 40px;
+  width: 80%;
+  // width: 350px;
+  // margin-right: 40px;
 
   &__header {
-    // margin-bottom: 40px;
-    // max-width: 580px;
     display: flex;
+    width: 100%;
     align-items: center;
-    // flex-wrap: wrap;
     justify-content: space-between;
+
+    // align-content: center;
   }
 }
 
@@ -51,7 +52,7 @@
   align-items: center;
   text-align: center;
   padding: 8px 14px;
-  margin-top: 40px;
+  // margin-top: 40px;
   cursor: pointer;
   position: relative;
 
@@ -66,9 +67,6 @@
   color: white;
   padding: 10px;
   border-radius: 4px;
-
-  // position: absolute;
-  // bottom: 5px;
 }
 
 .red {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'react-vis/dist/style.css';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import {
   XYPlot,
   XAxis,
@@ -38,9 +39,9 @@ class StockChart extends Component {
       });
   };
 
-  componentDidMount() {
-    this.fetchData(this.props.symbol);
-  }
+  // componentDidMount() {
+  //   this.fetchData(this.props.symbol);
+  // }
 
   componentDidUpdate(prevProps) {
     if (this.props.symbol !== prevProps.symbol) {
@@ -63,4 +64,14 @@ class StockChart extends Component {
   }
 }
 
-export default StockChart;
+const mapStateToProps = state => {
+  // return {
+  return state.selectedStock
+    ? { symbol: state.selectedStock.symbol }
+    : { symbol: null };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(StockChart);

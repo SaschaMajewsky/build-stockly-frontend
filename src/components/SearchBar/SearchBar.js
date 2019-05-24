@@ -3,6 +3,9 @@ import './SearchBar.scss';
 import Autosuggest from 'react-autosuggest';
 import data from './data';
 import StockInfo from '../StockInfo';
+import { connect } from 'react-redux';
+import { makeSearchSelection } from '../../actions';
+
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
@@ -45,12 +48,7 @@ class SearchBar extends React.Component {
   // based on the clicked suggestion. Teach Autosuggest how to calculate the
   // input value for every given suggestion.
   getSuggestionValue = suggestion => {
-    this.setState({
-      selection: {
-        symbol: suggestion.symbol,
-        name: suggestion.name
-      }
-    });
+    this.props.makeSearchSelection(suggestion);
     return `${suggestion.symbol}, ${suggestion.name}`;
   };
 
@@ -97,10 +95,12 @@ class SearchBar extends React.Component {
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
-        {this.state.selection.name && <StockInfo symbol={symbol} name={name} />}
       </>
     );
   }
 }
 
-export default SearchBar;
+export default connect(
+  null,
+  { makeSearchSelection }
+)(SearchBar);
