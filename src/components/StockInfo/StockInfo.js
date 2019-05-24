@@ -93,7 +93,7 @@ class StockInfo extends Component {
     const color = this.state.change < 0 ? 'red' : 'green';
 
     return (
-      <div>
+      <div className="stockinfo-container">
         <div className="stock-info-stock-chart">
           <div className="StockInfo">
             <div className="StockInfo__header">

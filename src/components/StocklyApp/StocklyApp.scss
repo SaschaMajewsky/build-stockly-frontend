@@ -52,9 +52,17 @@
 }
 
 .app-main {
-  display: flex;
   justify-content: space-between;
+  margin-top: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
   margin-top: 40px;
 
   position: relative;
+}
+
+body {
+  background: #efefef;
 }

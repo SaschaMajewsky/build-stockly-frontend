@@ -3,10 +3,14 @@
 .react-autosuggest__container {
   position: relative;
   box-sizing: content-box;
+  @media #{$kindle} {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .react-autosuggest__input {
-  width: 360px;
   height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -14,6 +18,10 @@
   font-size: 16px;
   border: 1px solid #aaa;
   border-radius: 4px;
+  @media #{$kindle} {
+    width: 90%;
+    margin: 1em 0 0 0;
+  }
 }
 
 .react-autosuggest__input--focused {

@@ -27,6 +27,7 @@ class TopSearched extends Component {
     return this.state.topSearched.length === 0 ? null : (
       <div className="top-searched">
         <h5>Top Searched Stocks</h5>
+
         <table>
           <thead>
             <tr>

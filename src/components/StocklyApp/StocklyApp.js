@@ -34,7 +34,7 @@ class StocklyApp extends Component {
             <div>
               <SearchBar />
             </div>
-            <div>
+            <div className="topsearched-container">
               <TopSearched />
               {/* <WatchList /> */}
             </div>
